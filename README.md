@@ -1,6 +1,6 @@
 # Claude Code Persona Plugin
 
-Set an AI persona style for Claude Code via the `/persona` command. One command to switch the entire conversation vibe.
+Set an AI persona style for Claude Code via the `/claude-persona:persona` command. One command to switch the entire conversation vibe.
 
 ## Install
 
@@ -19,7 +19,7 @@ claude plugin install claude-persona@imjdl-claude-persona
 
 1. Install the plugin
 2. Open any Claude Code session
-3. Type `/persona`
+3. Type `/claude-persona:persona`
 4. Pick a persona, choose scope (current project / global), done
 
 The persona prompt is written into the corresponding `CLAUDE.md` and takes effect immediately.
@@ -28,7 +28,7 @@ The persona prompt is written into the corresponding `CLAUDE.md` and takes effec
 
 ### Pick a Preset Persona
 
-Type `/persona` to see all available personas. Each option includes a preview dialogue so you know what you're getting.
+Type `/claude-persona:persona` to see all available personas. Each option includes a preview dialogue so you know what you're getting.
 
 | # | Persona | Style |
 |---|---------|-------|
@@ -60,7 +60,7 @@ When setting or clearing a persona, you choose where it applies:
 
 ## How It Works
 
-The plugin is a Claude Code custom command — `commands/persona.md` is a prompt template that instructs Claude to:
+The plugin is a Claude Code custom command — `commands/claude-persona:persona.md` is a prompt template that instructs Claude to:
 
 1. Detect your language from `~/.claude/CLAUDE.md` (CJK characters → Chinese, otherwise English)
 2. Present persona options with preview dialogues via `AskUserQuestion`
@@ -80,7 +80,7 @@ claude-persona/
 ├── README.md
 ├── CLAUDE.md            # Project-level instructions for Claude
 └── commands/
-    └── persona.md       # /persona command prompt template
+    └── persona.md       # /claude-persona:persona command prompt template
 ```
 
 ## License
