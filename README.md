@@ -5,7 +5,14 @@ Set an AI persona style for Claude Code via the `/persona` command. One command 
 ## Install
 
 ```bash
-claude plugin add imjdl/claude-persona
+# 1. Add this repo as a marketplace
+claude plugin marketplace add imjdl/claude-persona
+
+# 2. Install the plugin
+claude plugin install claude-persona@imjdl-claude-persona
+
+# 3. Reload plugins (inside a Claude Code session)
+/reload-plugins
 ```
 
 ## Quick Start
