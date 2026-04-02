@@ -10,7 +10,53 @@ All subsequent interactions (preview dialogues, persona prompts, confirmation me
 
 ## Step 1: Show Persona Options
 
-Use AskUserQuestion to present the preset personas below. Each option's `description` MUST contain a **short preview dialogue** (1-2 turns) written in the user's detected language. Keep previews concise to avoid UI overflow. Set question to "Choose a persona style" (or "选择一个人设风格" in Chinese) and header to "Persona".
+**IMPORTANT: AskUserQuestion only supports 2-4 options per question.** You MUST split the personas into multiple pages. Use the following 3-page layout:
+
+### Page 1: Western Characters (AskUserQuestion #1)
+
+Question: "选择一个人设风格 (1/3)" (or "Choose a persona style (1/3)" in English). Header: "Persona (1/3)".
+
+Show these 4 options:
+1. **赛博朋克黑客 / Cyberpunk Hacker** — with preview dialogue
+2. **慵懒资深导师 / Lazy Senior Mentor** — with preview dialogue
+3. **暴躁但靠谱队友 / Grumpy but Reliable Teammate** — with preview dialogue
+4. **温暖鼓励型前辈 / Senior Encourager** — with preview dialogue
+
+If the user picks one → proceed to Step 2 (scope selection).
+If the user types a number > 4 or indicates they want to see more → show Page 2.
+
+### Page 2: ACG Characters (AskUserQuestion #2)
+
+Question: "选择一个人设风格 (2/3)" (or "Choose a persona style (2/3)" in English). Header: "Persona (2/3)".
+
+Show these 4 options:
+1. **初音ミク / Hatsune Miku** — with preview dialogue
+2. **Speed (网红)** — with preview dialogue
+3. **Donald Trump** — with preview dialogue
+4. **五条悟 / Gojo Satoru** — with preview dialogue
+
+If the user picks one → proceed to Step 2 (scope selection).
+If the user indicates they want to see more → show Page 3.
+
+### Page 3: More Characters + Actions (AskUserQuestion #3)
+
+Question: "选择一个人设风格 (3/3)" (or "Choose a persona style (3/3)" in English). Header: "Persona (3/3)".
+
+Show these 4 options:
+1. **江户川柯南 / Conan** — with preview dialogue
+2. **女仆 / Maid** — with preview dialogue
+3. **清除人设 / Clear Persona** — brief description explaining it removes the active persona
+4. **自定义 / Custom** — brief description explaining the user can describe their own persona
+
+If the user picks a persona → proceed to Step 2 (scope selection).
+If the user picks "清除人设" → skip to the Clear Persona flow in Step 3.
+If the user picks "自定义" → skip to the Custom Persona flow in Step 3.
+
+**Best practice**: Start by presenting Page 1. If the user says "next page", "see more", "还有吗", or similar, present the next page. If the user already knows which persona they want (e.g., says "Trump" or "五条悟"), skip directly to that page or just go straight to Step 2.
+
+Each option's `description` MUST contain a **short preview dialogue** (1-2 turns) written in the user's detected language. Keep previews concise to avoid UI overflow.
+
+---
 
 ### Option 1: Cyberpunk Hacker
 
@@ -282,14 +328,17 @@ Persona affects language style only. Code quality, security, and professional ju
 
 ---
 
-### Clear Persona Option
+### Clear Persona Option (shown on Page 3)
 
-Present a **"清除人设"** (Clear Persona) option alongside the presets. This option should:
-- Remove the entire `<!-- persona-start -->` / `<!-- persona-end -->` block (including the markers themselves) from the target file
-- Skip Step 2 (scope selection) — instead, ask the user to choose scope before clearing
-- After clearing, confirm that the persona has been removed and Claude will return to default behavior
+When the user selects **清除人设** from Page 3, do NOT proceed to Step 2. Instead:
+1. First ask the user to choose scope using AskUserQuestion (same options as Step 2)
+2. Determine the target file based on scope
+3. Read the target file and search for `<!-- persona-start -->` and `<!-- persona-end -->` markers
+4. **If markers exist**: use Edit to remove the entire block including the markers and the content between them
+5. **If markers don't exist**: inform the user that there is no active persona to clear
+6. Confirm to the user that the persona has been cleared and Claude will return to default behavior
 
-The user can pick one of the preset options, select **清除人设** to remove the active persona, or select **Other** to describe a custom persona.
+The user can pick a preset from any page, select **清除人设** from Page 3 to remove the active persona, or select **自定义** from Page 3 to describe a custom persona.
 
 ## Step 2: Choose Scope
 
