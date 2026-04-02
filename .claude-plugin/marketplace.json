@@ -1,8 +1,11 @@
 {
   "name": "imjdl-claude-persona",
-  "description": "Claude Code Persona Plugin marketplace",
   "owner": {
     "name": "imjdl"
+  },
+  "metadata": {
+    "description": "Claude Code Persona Plugin marketplace",
+    "version": "0.1.0"
   },
   "plugins": [
     {
