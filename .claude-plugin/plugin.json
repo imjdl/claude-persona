@@ -2,5 +2,5 @@
   "name": "claude-persona",
   "version": "0.1.0",
   "description": "Set an AI persona style for Claude Code via /persona command",
-  "commands": ["./commands/persona"]
+  "commands": ["./commands/persona.md"]
 }
