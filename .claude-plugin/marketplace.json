@@ -1,5 +1,14 @@
 {
   "name": "imjdl-claude-persona",
   "description": "Claude Code Persona Plugin marketplace",
-  "plugins": ["."]
+  "owner": {
+    "name": "imjdl"
+  },
+  "plugins": [
+    {
+      "name": "claude-persona",
+      "source": "./",
+      "description": "Set an AI persona style for Claude Code via /persona command"
+    }
+  ]
 }
